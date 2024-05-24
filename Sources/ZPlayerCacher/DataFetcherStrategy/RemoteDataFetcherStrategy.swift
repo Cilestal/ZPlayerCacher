@@ -54,20 +54,13 @@ final class RemoteDataFetcherStrategy: NSObject, DataFetcherStrategy {
                     return
                 }
 
-                guard let acceptRanges = allHeaderFields["Accept-Ranges"] ?? allHeaderFields["accept-ranges"] else {
-                    promise(.failure(PlayerCacherError.responseMissingRequiredHeader("Accept-Ranges")))
-                    return
-                }
-
                 guard let contentRange = allHeaderFields["Content-Range"] ?? allHeaderFields["content-range"] ?? allHeaderFields["Content-Length"],
                       let contentLength = Int(contentRange.split(separator: "/").map { String($0) }.last ?? "0") else {
                     promise(.failure(PlayerCacherError.responseMissingRequiredHeader("content-range")))
                     return
                 }
 
-                let isByteRangeAccessSupported = (acceptRanges == "bytes") ? true : false
-
-                promise(.success(AssetMetaData(contentLength: contentLength, contentType: contentType, isByteRangeAccessSupported: isByteRangeAccessSupported)))
+                promise(.success(AssetMetaData(contentLength: contentLength, contentType: contentType, isByteRangeAccessSupported: true)))
             }
 
             self.dispatchQueue.async {
