@@ -50,12 +50,12 @@ final class RemoteDataFetcherStrategy: NSObject, DataFetcherStrategy {
                 }
 
                 guard let contentType = allHeaderFields["content-type"] else {
-                    promise(.failure(PlayerCacherError.responseMissingRequiredHeader("content-type")))
+                    promise(.failure(PlayerCacherError.responseMissingRequiredHeader("Content-Type")))
                     return
                 }
 
                 guard let acceptRanges = allHeaderFields["accept-ranges"] else {
-                    promise(.failure(PlayerCacherError.responseMissingRequiredHeader("accept-ranges")))
+                    promise(.failure(PlayerCacherError.responseMissingRequiredHeader("Accept-Ranges")))
                     return
                 }
 
